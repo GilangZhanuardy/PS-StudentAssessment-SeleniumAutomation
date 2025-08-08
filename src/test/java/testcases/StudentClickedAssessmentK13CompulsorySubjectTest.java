@@ -34,39 +34,39 @@ public class StudentClickedAssessmentK13CompulsorySubjectTest {
         loginPage.clickLoginButton();
     }
 
-//    @Test
-//    public void createAssessment() throws InterruptedException {
-//        CreateAssessmentPage createAssessmentPage = new CreateAssessmentPage(driver);
-//
-//        Response login = createAssessmentPage.loginViaAPI("teachergilang1", "password123*", "1791");
-//        String token = login.jsonPath().getString("data.jwt.access");
-//        int loginResponseCode = login.getStatusCode();
-//        System.out.println("Login response code: " + loginResponseCode);
-//
-//        OffsetDateTime now = OffsetDateTime.now(ZoneId.of("Asia/Jakarta"));
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
-//        String openingTimestamp = now.format(formatter);
-//        OffsetDateTime next = now.plusDays(1);
-//        String closingTimestamp = next.format(formatter);
-//
-//        String assessmentName = createAssessmentPage.createAssessmentName();
-//
-//        Response createAssessment = createAssessmentPage.teacherCreateAssessment(assessmentName, openingTimestamp, closingTimestamp, token);
-//        String assessmentID = createAssessment.jsonPath().getString("data.id");
-//        int createAssessmentResponseCode = createAssessment.getStatusCode();
-//        System.out.println("Create Assessment response code: " + createAssessmentResponseCode);
-//
-//        createAssessmentPage.createMCQ(assessmentID, token);
-//        createAssessmentPage.createEssay(assessmentID, token);
-//        createAssessmentPage.createFileUpload(assessmentID, token);
-//        createAssessmentPage.createMatching(assessmentID, token);
-//        createAssessmentPage.createTrueFalse(assessmentID, token);
-//        createAssessmentPage.createMCC(assessmentID, token);
-//        createAssessmentPage.createShortAnswer(assessmentID, token);
-//        Response publishAssessment = createAssessmentPage.publishAssessment(token, assessmentID);
-//        int publishAssessmentResponseCode = publishAssessment.getStatusCode();
-//        System.out.println("Publish Assessment response code: " + publishAssessmentResponseCode);
-//    }
+    @Test
+    public void createAssessment() throws InterruptedException {
+        CreateAssessmentPage createAssessmentPage = new CreateAssessmentPage(driver);
+
+        Response login = createAssessmentPage.loginViaAPI("teachergilang1", "password123*", "1791");
+        String token = login.jsonPath().getString("data.jwt.access");
+        int loginResponseCode = login.getStatusCode();
+        System.out.println("Login response code: " + loginResponseCode);
+
+        OffsetDateTime now = OffsetDateTime.now(ZoneId.of("Asia/Jakarta"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+        String openingTimestamp = now.format(formatter);
+        OffsetDateTime next = now.plusDays(1);
+        String closingTimestamp = next.format(formatter);
+
+        createAssessmentPage.createAssessmentName();
+
+        Response createAssessment = createAssessmentPage.teacherCreateAssessment(CreateAssessmentPage.assessmentName, openingTimestamp, closingTimestamp, token);
+        String assessmentID = createAssessment.jsonPath().getString("data.id");
+        int createAssessmentResponseCode = createAssessment.getStatusCode();
+        System.out.println("Create Assessment response code: " + createAssessmentResponseCode);
+
+        createAssessmentPage.createMCQ(assessmentID, token);
+        createAssessmentPage.createEssay(assessmentID, token);
+        createAssessmentPage.createFileUpload(assessmentID, token);
+        createAssessmentPage.createMatching(assessmentID, token);
+        createAssessmentPage.createTrueFalse(assessmentID, token);
+        createAssessmentPage.createMCC(assessmentID, token);
+        createAssessmentPage.createShortAnswer(assessmentID, token);
+        Response publishAssessment = createAssessmentPage.publishAssessment(token, assessmentID);
+        int publishAssessmentResponseCode = publishAssessment.getStatusCode();
+        System.out.println("Publish Assessment response code: " + publishAssessmentResponseCode);
+    }
 
     @Test(priority = 2)
     public void redirectToAssessmentPage() throws InterruptedException {
@@ -83,6 +83,9 @@ public class StudentClickedAssessmentK13CompulsorySubjectTest {
 
         assessmentListPage.clickSubject();
         String titleAssessmentListPage = assessmentListPage.getTextAssessmentTitle();
+        Assert.assertEquals(CreateAssessmentPage.assessmentName,  titleAssessmentListPage);
+        System.out.println("CreateAssessmentPage.assessmentName: " + CreateAssessmentPage.assessmentName);
+        System.out.println("titleAssessmentListPage: " + titleAssessmentListPage);
         assessmentListPage.clickAssessment();
         String titleAssessmentInstructionPage = instructionPage.getTextAssessmentTitleInstructionPage();
         Assert.assertEquals(titleAssessmentListPage, titleAssessmentInstructionPage);

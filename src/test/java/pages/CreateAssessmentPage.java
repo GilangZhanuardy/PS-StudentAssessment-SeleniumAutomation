@@ -11,18 +11,19 @@ public class CreateAssessmentPage {
     WebDriver driver;
     WebDriverWait wait;
 
+    public static String assessmentName;
+
     public CreateAssessmentPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
-    public String createAssessmentName(){
+    public void createAssessmentName(){
         Random random = new Random();
-        String assessmentName;
 
         int randomNumber = 1000 + random.nextInt(9000); // 1000-9999
 
-        return assessmentName = "Automation Assessment " + randomNumber;
+        assessmentName = "Automation Assessment " + randomNumber;
     }
 
     public Response loginViaAPI(String username, String password, String schoolID) {
