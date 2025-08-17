@@ -3,9 +3,7 @@ package testcases;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.openqa.selenium.WebDriver;
 import pages.*;
 
@@ -14,10 +12,11 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 //TC-823 user view online assessment for K13 compulsory subject on current tab
+@Listeners(TestListener.class)
 public class StudentClickedAssessmentK13CompulsorySubjectTest {
     WebDriver driver;
 
-    @BeforeClass
+    @BeforeTest
     public void setUp(){
         driver = WebDriverManager.chromedriver().create();
         driver.manage().window().maximize();
@@ -34,7 +33,7 @@ public class StudentClickedAssessmentK13CompulsorySubjectTest {
         loginPage.clickLoginButton();
     }
 
-    @Test
+    @Test(priority = 2)
     public void createAssessment() throws InterruptedException {
         CreateAssessmentPage createAssessmentPage = new CreateAssessmentPage(driver);
 
@@ -68,7 +67,7 @@ public class StudentClickedAssessmentK13CompulsorySubjectTest {
         System.out.println("Publish Assessment response code: " + publishAssessmentResponseCode);
     }
 
-    @Test(priority = 2)
+    @Test(priority = 3)
     public void redirectToAssessmentPage() throws InterruptedException {
         DashboardPage dashboardPage = new DashboardPage(driver);
 
@@ -76,7 +75,7 @@ public class StudentClickedAssessmentK13CompulsorySubjectTest {
         Thread.sleep(5000);
     }
 
-    @Test(priority = 3)
+    @Test(priority = 4)
     public void mainTest() throws InterruptedException {
         AssessmentListPage assessmentListPage = new AssessmentListPage(driver);
         InstructionPage instructionPage = new InstructionPage(driver);
@@ -93,7 +92,7 @@ public class StudentClickedAssessmentK13CompulsorySubjectTest {
         Thread.sleep(10000);
     }
 
-    @AfterClass
+    @AfterTest
     public void tearDown(){
         driver.quit();
     }
